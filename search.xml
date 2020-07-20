@@ -20,4 +20,79 @@
 <p>More info: <a href="https://hexo.io/docs/one-command-deployment.html" target="_blank" rel="noopener">Deployment</a></p>
 ]]></content>
   </entry>
+  <entry>
+    <title>console定时刷新页面，且不会因刷新页面导致js失效</title>
+    <url>/2020/07/20/console%E5%AE%9A%E6%97%B6%E5%88%B7%E6%96%B0%E9%A1%B5%E9%9D%A2%EF%BC%8C%E4%B8%94%E4%B8%8D%E4%BC%9A%E5%9B%A0%E5%88%B7%E6%96%B0%E9%A1%B5%E9%9D%A2%E5%AF%BC%E8%87%B4js%E5%A4%B1%E6%95%88/</url>
+    <content><![CDATA[<figure class="highlight js"><table><tr><td class="code"><pre><span class="line">timeout=prompt(<span class="string">"Set timeout (Second):"</span>);</span><br><span class="line">count=<span class="number">0</span></span><br><span class="line">current=location.href;</span><br><span class="line"><span class="keyword">if</span>(timeout&gt;<span class="number">0</span>)</span><br><span class="line">setTimeout(<span class="string">'reload()'</span>,<span class="number">1000</span>*timeout);</span><br><span class="line"><span class="keyword">else</span></span><br><span class="line">location.replace(current);</span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">reload</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">setTimeout(<span class="string">'reload()'</span>,<span class="number">1000</span>*timeout);</span><br><span class="line">count++;</span><br><span class="line"><span class="built_in">console</span>.log(<span class="string">'每（'</span>+timeout+<span class="string">'）秒自动刷新,刷新次数：'</span>+count);</span><br><span class="line">fr4me=<span class="string">'&lt;frameset cols=\'*\'&gt;\n&lt;frame src=\''</span>+current+<span class="string">'\'/&gt;'</span>;</span><br><span class="line">fr4me+=<span class="string">'&lt;/frameset&gt;'</span>;</span><br><span class="line"><span class="keyword">with</span>(<span class="built_in">document</span>)&#123;write(fr4me);<span class="keyword">void</span>(close())&#125;;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>把这段js粘到chrome等浏览器控制台，回车，设置刷新时间即可；<br>————————————————<br>版权声明：本文为CSDN博主「游荡人生」的原创文章，遵循CC 4.0 BY-SA版权协议，转载请附上原文出处链接及本声明。<br>原文链接：<a href="https://blog.csdn.net/jiang18238032891/article/details/103917553" target="_blank" rel="noopener">https://blog.csdn.net/jiang18238032891/article/details/103917553</a></p>
+]]></content>
+      <tags>
+        <tag>web</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>学习通刷视频----开启自动播放模式代码</title>
+    <url>/2020/07/20/%E5%AD%A6%E4%B9%A0%E9%80%9A%E5%88%B7%E8%A7%86%E9%A2%91-%E5%BC%80%E5%90%AF%E8%87%AA%E5%8A%A8%E6%92%AD%E6%94%BE%E6%A8%A1%E5%BC%8F%E4%BB%A3%E7%A0%81/</url>
+    <content><![CDATA[<p>学习通刷视频—-开启自动播放模式代码</p>
+<a id="more"></a>
+
+
+<figure class="highlight"><table><tr><td class="code"><pre><span class="line">var fa = $("body");</span><br><span class="line">var btn = $("&lt;li&gt;&lt;/li&gt;");</span><br><span class="line">var json = &#123;</span><br><span class="line">    "background": "#31e16d",</span><br><span class="line">    "height": "16px",</span><br><span class="line">    "padding": "5px",</span><br><span class="line">    "z-index": 999999,</span><br><span class="line">    "cursor": "pointer",</span><br><span class="line">    "top": "300px",</span><br><span class="line">    "right": "120px",</span><br><span class="line">    "position": "fixed"</span><br><span class="line">&#125;;</span><br><span class="line">btn.css(json);</span><br><span class="line">btn.html("&lt;span id='lfsenior'&gt;开启自动播放模式&lt;/span&gt;");</span><br><span class="line">fa.append(btn);</span><br><span class="line"> </span><br><span class="line">btn.click(function () &#123;</span><br><span class="line"> </span><br><span class="line">    setInterval(function () &#123;</span><br><span class="line">        <span class="comment">//获取iframe</span></span><br><span class="line">        var video = $("iframe").contents().find("iframe").contents();</span><br><span class="line">        <span class="comment">//播放函数</span></span><br><span class="line">        var play = function () &#123;</span><br><span class="line">            video.find("#video &gt; button").click();</span><br><span class="line">            var jy = video.find("#video &gt; div.vjs-control-bar &gt; div.vjs-volume-panel.vjs-control.vjs-volume-panel-vertical &gt; button");</span><br><span class="line">            if (jy.attr("title") != "取消静音") &#123;</span><br><span class="line">                jy.click()</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="comment">//如果正在加载</span></span><br><span class="line">        var load = video.find("#loading");</span><br><span class="line">        if (load.css("visibility") != "hidden") &#123;</span><br><span class="line">            return;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="comment">//获取当前进度</span></span><br><span class="line">        var spans = video.find("#video &gt; div.vjs-control-bar &gt; div.vjs-progress-control.vjs-control &gt; div").attr("aria-valuenow");</span><br><span class="line">        <span class="comment">// 如果还没播放完</span></span><br><span class="line">        if (spans != 100) &#123;</span><br><span class="line">            play();</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="comment">//如果播放结束</span></span><br><span class="line">        if (spans == 100) &#123;</span><br><span class="line">            var bs = false;</span><br><span class="line">            $(".onetoone").find(".flush").each(function () &#123;</span><br><span class="line">                if (bs) &#123;</span><br><span class="line">                    $(this).prev("a").on('click', "#coursetree&gt;ncells", function () &#123;</span><br><span class="line">                        console.log("已结束章节：" + $(this).prev("a").attr("title"))</span><br><span class="line">                    &#125;)</span><br><span class="line">                    var str = $(this).prev("a").attr("href");</span><br><span class="line">                    str = str.match(/'(\S*)'/)[1];</span><br><span class="line">                    var reg = new RegExp("'", "g");</span><br><span class="line">                    str = str.replace(reg, "");</span><br><span class="line">                    var href = str.split(",");</span><br><span class="line">                    getTeacherAjax(href[0], href[1], href[2])</span><br><span class="line">                    bs = false;</span><br><span class="line">                &#125;</span><br><span class="line">                if ($(this).css("display") == "block") &#123;</span><br><span class="line">                    bs = true;</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;)</span><br><span class="line">        &#125;</span><br><span class="line">        $("#lfsenior").html("自动模式已开启,本章进度:" + spans + "%");</span><br><span class="line">    &#125;, 100);</span><br><span class="line"> </span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+
+<p>F12————&gt;在Console中粘贴即可——–&gt;回车OK！</p>
+<p>————————————————<br>版权声明：本文为CSDN博主「Kiam_」的原创文章，遵循 CC 4.0 BY-SA 版权协议，转载请附上原文出处链接及本声明。<br>原文链接：<a href="https://blog.csdn.net/Known668/java/article/details/89873873" target="_blank" rel="noopener">https://blog.csdn.net/Known668/java/article/details/89873873</a></p>
+]]></content>
+      <tags>
+        <tag>web</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>环地平弧</title>
+    <url>/2020/07/20/%E7%8E%AF%E5%9C%B0%E5%B9%B3%E5%BC%A7/</url>
+    <content><![CDATA[<p>　　环地平弧又称日载或日承现象。民间也有彩虹云和火焰彩虹的说法。环地平弧号称为所有晕像中最美丽者，其颜色顺序自上而下分别为：红色、橙色、黄色、绿色、蓝色、靛蓝、蓝紫色。是光的一种。</p>
+<a id="more"></a>
+
+
+<p>　　环地平弧必须在太阳距离地平线至少58度时才会出现，但在中纬度地区，太阳仅在六月和七月初才能到达此一高度，且仅限于日中前后数小时内。</p>
+<p>　　环地平弧现象的形成原理与环天顶弧相似，均为太阳光照射高层大气中冰晶折射产生所产生。不同的是，环地平弧现象的入射光从冰晶的上面进入，因此折射出来的颜色顺序与环天顶弧相反。</p>
+<p>　　环地彩虹弧现象是一种发生概率较低的罕见现象，一般发生在太阳位于高角度位置，其光线穿过高海拔带有较多冰晶的卷云层形成的情况下。带有冰晶的卷云层折射光线形成不同可视光谱的波段，由于其较少见，迄今火彩虹现象较少被拍摄到。</p>
+]]></content>
+      <tags>
+        <tag>地理</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>解决Hoex安装时的问题</title>
+    <url>/2020/07/20/%E8%A7%A3%E5%86%B3Hoex%E5%AE%89%E8%A3%85%E6%97%B6%E7%9A%84%E9%97%AE%E9%A2%98/</url>
+    <content><![CDATA[<p>解决Hoex安装时的问题</p>
+<a id="more"></a>
+
+
+<ol>
+<li><p>对于 <code>Cannot read property &#39;materialcdn&#39; of undefined</code> 错误：<br><a href="https://github.com/bolnh/hexo-theme-material/issues/688#issuecomment-410617015" target="_blank" rel="noopener">https://github.com/bolnh/hexo-theme-material/issues/688#issuecomment-410617015</a></p>
+</li>
+<li><p>对于无法生成index.html<br><a href="https://blog.csdn.net/qq_41507243/article/details/104433464?utm_medium=distribute.pc_relevant.none-task-blog-BlogCommendFromMachineLearnPai2-2.nonecase&depth_1-utm_source=distribute.pc_relevant.none-task-blog-BlogCommendFromMachineLearnPai2-2.nonecase" target="_blank" rel="noopener">https://blog.csdn.net/qq_41507243/article/details/104433464?utm_medium=distribute.pc_relevant.none-task-blog-BlogCommendFromMachineLearnPai2-2.nonecase&amp;depth_1-utm_source=distribute.pc_relevant.none-task-blog-BlogCommendFromMachineLearnPai2-2.nonecase</a></p>
+</li>
+</ol>
+]]></content>
+      <tags>
+        <tag>blog</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>将div标签固定在页面底部的傻瓜式方法</title>
+    <url>/2020/07/20/%E5%B0%86div%E6%A0%87%E7%AD%BE%E5%9B%BA%E5%AE%9A%E5%9C%A8%E9%A1%B5%E9%9D%A2%E5%BA%95%E9%83%A8%E7%9A%84%E5%82%BB%E7%93%9C%E5%BC%8F%E6%96%B9%E6%B3%95/</url>
+    <content><![CDATA[<p>当时为了在底部添加ICP备案号，结果没发现傻瓜式方法。</p>
+<a id="more"></a>
+
+<p>在html前面添加到<style>中：</p>
+<figure class="highlight html"><table><tr><td class="code"><pre><span class="line">.foot-home &#123;</span><br><span class="line">	position: absolute;</span><br><span class="line">	bottom: 0;</span><br><span class="line">	left: 0;</span><br><span class="line">	right: 0;</span><br><span class="line">	width: 100%;</span><br><span class="line">	padding: 1em 0;</span><br><span class="line">	text-align: center;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>然后加入：</p>
+<figure class="highlight html"><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">div</span> <span class="attr">id</span>=<span class="string">"footer_homepage"</span> <span class="attr">class</span>=<span class="string">"foot-home js-foot-home"</span>&gt;</span></span><br><span class="line">	 <span class="tag">&lt;<span class="name">a</span> <span class="attr">href</span>=<span class="string">"http://beian.miit.gov.cn/"</span> <span class="attr">target</span>=<span class="string">"_blank"</span> <span class="attr">style</span>=<span class="string">"color: #bdbdbd;"</span>&gt;</span>粤ICP备xxx号<span class="tag">&lt;/<span class="name">a</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br></pre></td></tr></table></figure>
+]]></content>
+      <tags>
+        <tag>web</tag>
+      </tags>
+  </entry>
 </search>
