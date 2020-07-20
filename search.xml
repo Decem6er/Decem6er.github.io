@@ -98,4 +98,24 @@
         <tag>web</tag>
       </tags>
   </entry>
+  <entry>
+    <title>root用户修改文件（chown,chmod）提示没有权限的解决方法</title>
+    <url>/2020/07/20/root%E7%94%A8%E6%88%B7%E4%BF%AE%E6%94%B9%E6%96%87%E4%BB%B6%EF%BC%88chown-chmod%EF%BC%89%E6%8F%90%E7%A4%BA%E6%B2%A1%E6%9C%89%E6%9D%83%E9%99%90%E7%9A%84%E8%A7%A3%E5%86%B3%E6%96%B9%E6%B3%95/</url>
+    <content><![CDATA[<p>chattr可以防止关键文件被修改</p>
+<p>在linux下，有些配置文件是不允许任何人包括root修改的，为了防止被误删除或修改， 可以设定该文件的”不可修改位(immutable)”。 </p>
+<a id="more"></a>
+
+
+<p>例如： </p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">chattr +i &#x2F;etc&#x2F;fstab</span><br></pre></td></tr></table></figure>
+
+<p>如果需要修改文件则： </p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">chattr -i &#x2F;etc&#x2F;fstab</span><br></pre></td></tr></table></figure>
+
+<p>以后再修改文件</p>
+]]></content>
+      <tags>
+        <tag>linux</tag>
+      </tags>
+  </entry>
 </search>
